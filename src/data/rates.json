@@ -1,0 +1,122 @@
+[
+  {
+    "id": "1",
+    "lender": "TD Bank",
+    "term": "5 Year",
+    "type": "Fixed",
+    "rate": 4.89,
+    "insured": true,
+    "features": ["Portable", "20% prepayment", "No cashback"],
+    "lastUpdated": "2026-03-09"
+  },
+  {
+    "id": "2",
+    "lender": "RBC Royal Bank",
+    "term": "5 Year",
+    "type": "Variable",
+    "rate": 4.45,
+    "insured": true,
+    "features": ["Prime - 0.50%", "Convertible", "Portable"],
+    "lastUpdated": "2026-03-09"
+  },
+  {
+    "id": "3",
+    "lender": "BMO",
+    "term": "3 Year",
+    "type": "Fixed",
+    "rate": 4.74,
+    "insured": false,
+    "features": ["Portable", "10% prepayment", "Semi-annual payments"],
+    "lastUpdated": "2026-03-09"
+  },
+  {
+    "id": "4",
+    "lender": "CIBC",
+    "term": "2 Year",
+    "type": "Fixed",
+    "rate": 5.14,
+    "insured": false,
+    "features": ["Portable", "15% prepayment"],
+    "lastUpdated": "2026-03-09"
+  },
+  {
+    "id": "5",
+    "lender": "Scotiabank",
+    "term": "1 Year",
+    "type": "Fixed",
+    "rate": 5.59,
+    "insured": true,
+    "features": ["Short-term commitment", "Portable"],
+    "lastUpdated": "2026-03-09"
+  },
+  {
+    "id": "6",
+    "lender": "First National",
+    "term": "5 Year",
+    "type": "Fixed",
+    "rate": 4.69,
+    "insured": true,
+    "features": ["Best rate guarantee", "20% prepayment", "Portable"],
+    "lastUpdated": "2026-03-09"
+  },
+  {
+    "id": "7",
+    "lender": "MCAP",
+    "term": "5 Year",
+    "type": "Variable",
+    "rate": 4.30,
+    "insured": false,
+    "features": ["Prime - 0.65%", "Flexible payments", "Convertible"],
+    "lastUpdated": "2026-03-09"
+  },
+  {
+    "id": "8",
+    "lender": "Meridian CU",
+    "term": "3 Year",
+    "type": "Variable",
+    "rate": 4.55,
+    "insured": false,
+    "features": ["Competitive variable", "Convertible at any time"],
+    "lastUpdated": "2026-03-09"
+  },
+  {
+    "id": "9",
+    "lender": "Tangerine",
+    "term": "10 Year",
+    "type": "Fixed",
+    "rate": 5.49,
+    "insured": false,
+    "features": ["Long-term security", "Double-up payments"],
+    "lastUpdated": "2026-03-09"
+  },
+  {
+    "id": "10",
+    "lender": "EQ Bank",
+    "term": "2 Year",
+    "type": "Variable",
+    "rate": 4.20,
+    "insured": true,
+    "features": ["No frills", "Online lender", "Great rate"],
+    "lastUpdated": "2026-03-09"
+  },
+  {
+    "id": "11",
+    "lender": "Desjardins",
+    "term": "7 Year",
+    "type": "Fixed",
+    "rate": 5.25,
+    "insured": false,
+    "features": ["Long stability", "Members dividends", "Portable"],
+    "lastUpdated": "2026-03-09"
+  },
+  {
+    "id": "12",
+    "lender": "National Bank",
+    "term": "4 Year",
+    "type": "Fixed",
+    "rate": 4.84,
+    "insured": true,
+    "features": ["Mid-term security", "20% prepayment"],
+    "lastUpdated": "2026-03-09"
+  }
+]
