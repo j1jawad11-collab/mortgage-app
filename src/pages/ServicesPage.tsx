@@ -44,18 +44,18 @@ export function ServicesPage() {
         </div>
 
         {/* Process Section */}
-        <div className="bg-navy-900 rounded-3xl p-10 md:p-14 text-white relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary-600/20 rounded-full blur-3xl" />
-          <h2 className="text-3xl font-bold mb-10 text-center relative z-10">{c.process.title}</h2>
+        <div className="bg-[#0b1528] rounded-3xl p-10 md:p-14 text-white relative overflow-hidden shadow-2xl border border-white/10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-primary-500/15 rounded-full blur-[100px] pointer-events-none" />
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-12 text-center text-white relative z-10 tracking-tight">{c.process.title}</h2>
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
             {c.process.steps.map((s) => (
-              <div key={s.step} className="text-center">
-                <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-4 text-primary-300 font-bold text-xl">
+              <div key={s.step} className="text-center group">
+                <div className="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center mx-auto mb-5 text-primary-300 font-extrabold text-2xl shadow-inner border border-white/5 group-hover:bg-primary-600 group-hover:text-white transition-all duration-300">
                   {s.step}
                 </div>
-                <h3 className="text-lg font-bold mb-2">{s.title}</h3>
-                <p className="text-sm text-slate-400">{s.desc}</p>
+                <h3 className="text-xl font-bold mb-3 text-white">{s.title}</h3>
+                <p className="text-[15px] text-slate-300 leading-relaxed font-medium">{s.desc}</p>
               </div>
             ))}
           </div>
