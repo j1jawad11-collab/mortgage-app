@@ -12,6 +12,12 @@ import { ServicesPage } from '@/pages/ServicesPage'
 import { BlogPage } from '@/pages/BlogPage'
 import { BlogPostPage } from '@/pages/BlogPostPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
+import { AuthProvider } from '@/context/AuthContext'
+import { AdminProtectedRoute } from '@/components/AdminProtectedRoute'
+import { AdminLayout } from '@/components/layout/AdminLayout'
+import { AdminLoginPage } from '@/pages/admin/AdminLoginPage'
+import { AdminDashboard } from '@/pages/admin/AdminDashboard'
+import { AdminPostsPage } from '@/pages/admin/AdminPostsPage'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,23 +31,40 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route index element={<HomePage />} />
-            <Route path="mortgage-calculator" element={<MortgageCalculatorPage />} />
-            <Route path="refinance-calculator" element={<RefinanceCalculatorPage />} />
-            <Route path="affordability-calculator" element={<AffordabilityCalculatorPage />} />
-            <Route path="rates" element={<RatesPage />} />
-            <Route path="about" element={<AboutPage />} />
-            <Route path="services" element={<ServicesPage />} />
-            <Route path="blog" element={<BlogPage />} />
-            <Route path="blog/:slug" element={<BlogPostPage />} />
-            <Route path="contact" element={<ContactPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* Public site routes */}
+            <Route element={<Layout />}>
+              <Route index element={<HomePage />} />
+              <Route path="mortgage-calculator" element={<MortgageCalculatorPage />} />
+              <Route path="refinance-calculator" element={<RefinanceCalculatorPage />} />
+              <Route path="affordability-calculator" element={<AffordabilityCalculatorPage />} />
+              <Route path="rates" element={<RatesPage />} />
+              <Route path="about" element={<AboutPage />} />
+              <Route path="services" element={<ServicesPage />} />
+              <Route path="blog" element={<BlogPage />} />
+              <Route path="blog/:slug" element={<BlogPostPage />} />
+              <Route path="contact" element={<ContactPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Route>
+
+            {/* Admin routes */}
+            <Route path="admin/login" element={<AdminLoginPage />} />
+            <Route
+              path="admin"
+              element={
+                <AdminProtectedRoute>
+                  <AdminLayout />
+                </AdminProtectedRoute>
+              }
+            >
+              <Route index element={<AdminDashboard />} />
+              <Route path="posts" element={<AdminPostsPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </QueryClientProvider>
   )
 }
