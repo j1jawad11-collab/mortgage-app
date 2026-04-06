@@ -1,28 +1,19 @@
 import { MongoClient } from 'mongodb'
-import type { VercelRequest, VercelResponse } from '@vercel/node'
 
 const uri = process.env.MONGODB_URI
+let cachedClient = null
 
-// Cache the MongoDB client across warm serverless invocations
-let cachedClient: MongoClient | null = null
-
-async function connectToDatabase(): Promise<MongoClient> {
-  if (cachedClient) {
-    return cachedClient
-  }
-
-  if (!uri) {
-    throw new Error('MONGODB_URI is not defined in environment variables.')
-  }
+async function connectToDatabase() {
+  if (cachedClient) return cachedClient
+  if (!uri) throw new Error('MONGODB_URI is not defined in environment variables.')
 
   const client = new MongoClient(uri)
   await client.connect()
   cachedClient = client
-
   return client
 }
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req, res) {
   try {
     const client = await connectToDatabase()
     const db = client.db('mortgageDB')
@@ -36,7 +27,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       success: true,
       insertedId: result.insertedId,
     })
-  } catch (error: unknown) {
+  } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error'
     console.error('[test-db] error:', message)
 
