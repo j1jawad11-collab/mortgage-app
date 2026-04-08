@@ -4,6 +4,7 @@ import { useAuth } from '@/context/AuthContext'
 const navItems = [
   { label: 'Dashboard', path: '/admin', icon: '📊' },
   { label: 'Blog Posts', path: '/admin/posts', icon: '📝' },
+  { label: 'Settings', path: '/admin/settings', icon: '⚙️' },
 ]
 
 export function AdminLayout() {

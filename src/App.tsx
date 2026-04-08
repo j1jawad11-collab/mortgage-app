@@ -18,6 +18,7 @@ import { AdminLayout } from '@/components/layout/AdminLayout'
 import { AdminLoginPage } from '@/pages/admin/AdminLoginPage'
 import { AdminDashboard } from '@/pages/admin/AdminDashboard'
 import { AdminPostsPage } from '@/pages/admin/AdminPostsPage'
+import { AdminSettingsPage } from '@/pages/admin/AdminSettingsPage'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -61,6 +62,7 @@ function App() {
             >
               <Route index element={<AdminDashboard />} />
               <Route path="posts" element={<AdminPostsPage />} />
+              <Route path="settings" element={<AdminSettingsPage />} />
             </Route>
           </Routes>
         </BrowserRouter>
