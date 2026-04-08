@@ -1,13 +1,60 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
-import { blogPosts } from '@/data/blogPosts'
+import { useState, useEffect } from 'react'
+
+interface Post {
+  _id: string
+  slug: string
+  title: string
+  category: string
+  excerpt: string
+  content: string
+  imageUrl: string
+  createdAt: string
+}
 
 export function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>()
-  const post = blogPosts.find(p => p.slug === slug)
+  const [post, setPost] = useState<Post | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [notFound, setNotFound] = useState(false)
 
-  if (!post) {
+  useEffect(() => {
+    fetch('/api/posts')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          const found = data.find(p => p.slug === slug)
+          if (found) {
+            setPost(found)
+          } else {
+            setNotFound(true)
+          }
+        } else {
+          setNotFound(true)
+        }
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error('Failed to fetch post:', err)
+        setLoading(false)
+        setNotFound(true)
+      })
+  }, [slug])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-50 pt-32 pb-16 flex justify-center">
+        <div className="text-xl font-semibold text-slate-500 animate-pulse">Loading article...</div>
+      </div>
+    )
+  }
+
+  if (notFound || !post) {
     return <Navigate to="/blog" replace />
   }
+
+  const readTime = Math.ceil(post.content.split(/\s+/).length / 200) + ' min read';
+  const formattedDate = new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
   // Very simple text rendering: split by double newline for paragraphs
   const renderContent = (text: string) => {
@@ -42,9 +89,9 @@ export function BlogPostPage() {
             <div className="flex items-center justify-center gap-3 mb-4 text-sm font-semibold">
               <span className="text-primary-600 uppercase tracking-wider bg-primary-50 px-3 py-1 rounded-full">{post.category}</span>
               <span className="text-slate-300">•</span>
-              <span className="text-slate-500">{post.readTime}</span>
+              <span className="text-slate-500">{readTime}</span>
               <span className="text-slate-300">•</span>
-              <span className="text-slate-500">{post.date}</span>
+              <span className="text-slate-500">{formattedDate}</span>
             </div>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight mb-6">
               {post.title}
@@ -53,7 +100,7 @@ export function BlogPostPage() {
 
           <figure className="mb-10 rounded-xl overflow-hidden shadow-lg border border-slate-100">
             <img 
-              src={post.imageUrl} 
+              src={post.imageUrl || 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=800'} 
               alt={post.title} 
               className="w-full h-auto max-h-[450px] object-cover"
             />

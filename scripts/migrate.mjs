@@ -1,18 +1,8 @@
-export interface BlogPost {
-  id: number
-  slug: string
-  title: string
-  excerpt: string
-  content: string
-  category: string
-  date: string
-  readTime: string
-  imageUrl: string
-}
+import { MongoClient } from 'mongodb'
 
-export const blogPosts: BlogPost[] = [
+// Hardcoded posts from src/data/blogPosts.ts
+const blogPosts = [
   {
-    id: 1,
     slug: 'fixed-vs-variable-rates-2026',
     title: 'Fixed vs. Variable Rates: What to Choose in 2026',
     excerpt: 'With recent Bank of Canada rate announcements, many buyers are torn between the safety of fixed rates and the potential savings of variable rates.',
@@ -24,12 +14,10 @@ A fixed-rate mortgage offers stability and peace of mind. Your interest rate and
 **What Should You Choose?**
 Consulting with a licensed mortgage broker can help you run the numbers and stress-test both options against your personal financial profile.`,
     category: 'Market Updates',
-    date: 'Mar 15, 2026',
-    readTime: '5 min read',
+    createdAt: new Date('2026-03-15T00:00:00Z'),
     imageUrl: 'https://images.unsplash.com/photo-1601597111158-2fceff292cdc?auto=format&fit=crop&q=80&w=800'
   },
   {
-    id: 2,
     slug: 'build-down-payment-faster',
     title: 'How to Build Your Down Payment Faster',
     excerpt: 'Struggling to save 20%? Discover lesser-known strategies, government programs, and RRSP tactics that can accelerate your path to homeownership.',
@@ -41,12 +29,10 @@ Introduced recently, the FHSA is a game-changer. It combines the best features o
 **2. Automated Micro-Saving**
 Rethink your monthly cash flow. Automate a transfer to a high-interest savings account the day you get paid. Conduct a ruthless audit of your subscriptions.`,
     category: 'First-Time Buyers',
-    date: 'Mar 08, 2026',
-    readTime: '4 min read',
+    createdAt: new Date('2026-03-08T00:00:00Z'),
     imageUrl: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=800'
   },
   {
-    id: 3,
     slug: 'understanding-mortgage-stress-test',
     title: 'Understanding the Mortgage Stress Test',
     excerpt: 'The OSFI stress test determines your maximum affordability. Learn how it works, how it impacts your purchasing power, and ways to improve your ratios.',
@@ -58,12 +44,10 @@ You must qualify at your contract rate plus 2.0%, or the minimum qualifying rate
 **How to Beat the Stress Test**
 While you can't bypass the rule, you can improve your chances by reducing debt or adding a co-signer.`,
     category: 'Education',
-    date: 'Feb 25, 2026',
-    readTime: '6 min read',
+    createdAt: new Date('2026-02-25T00:00:00Z'),
     imageUrl: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&q=80&w=800'
   },
   {
-    id: 4,
     slug: 'breaking-your-mortgage',
     title: 'When Should You Break Your Mortgage?',
     excerpt: 'Sometimes paying a hefty penalty to refinance into a lower rate actually saves you money. Here is exactly how to run the numbers.',
@@ -74,12 +58,10 @@ If your penalty is $4,000, but refinancing saves you $200 a month, your break-ev
 
 Consult your broker to accurately determine what your penalty would be, as Interest Rate Differential penalties at major banks can be punishing.`,
     category: 'Refinancing',
-    date: 'Feb 12, 2026',
-    readTime: '7 min read',
+    createdAt: new Date('2026-02-12T00:00:00Z'),
     imageUrl: 'https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&q=80&w=800'
   },
   {
-    id: 5,
     slug: 'hidden-costs-buying-home',
     title: 'The Hidden Costs of Buying a Home',
     excerpt: 'Beyond the down payment, there are closing costs, land transfer taxes, and legal fees. Make sure your budget is prepared for these day-one expenses.',
@@ -92,12 +74,10 @@ Consult your broker to accurately determine what your penalty would be, as Inter
 
 Don't be caught off guard on closing day!`,
     category: 'Education',
-    date: 'Jan 30, 2026',
-    readTime: '4 min read',
+    createdAt: new Date('2026-01-30T00:00:00Z'),
     imageUrl: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&q=80&w=800'
   },
   {
-    id: 6,
     slug: 'home-equity-to-invest',
     title: 'Using Your Home Equity to Invest',
     excerpt: 'The Smith Manoeuvre and other strategies allow Canadian homeowners to make their mortgage interest tax-deductible while building an investment portfolio.',
@@ -108,8 +88,39 @@ In Canada, if you borrow to invest in assets that generate income (like dividend
 
 This strategy requires high risk tolerance and strict discipline, but it accelerates wealth creation exponentially.`,
     category: 'Investing',
-    date: 'Jan 15, 2026',
-    readTime: '8 min read',
+    createdAt: new Date('2026-01-15T00:00:00Z'),
     imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800'
   }
 ]
+
+async function migrate() {
+  const uri = process.env.MONGODB_URI
+  if (!uri) {
+    console.error('MONGODB_URI environment variable is required.')
+    process.exit(1)
+  }
+
+  const client = new MongoClient(uri)
+  try {
+    await client.connect()
+    const db = client.db('mortgageDB')
+    const posts = db.collection('posts')
+
+    for (const post of blogPosts) {
+      const existing = await posts.findOne({ slug: post.slug })
+      if (!existing) {
+        await posts.insertOne({ ...post, updatedAt: new Date() })
+        console.log(\`Inserted \${post.title}\`)
+      } else {
+        console.log(\`Skipping \${post.title} (already exists)\`)
+      }
+    }
+    console.log('Migration completed!')
+  } catch (err) {
+    console.error('Migration failed:', err)
+  } finally {
+    await client.close()
+  }
+}
+
+migrate()
