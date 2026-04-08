@@ -110,9 +110,9 @@ async function migrate() {
       const existing = await posts.findOne({ slug: post.slug })
       if (!existing) {
         await posts.insertOne({ ...post, updatedAt: new Date() })
-        console.log(\`Inserted \${post.title}\`)
+        console.log(`Inserted ${post.title}`)
       } else {
-        console.log(\`Skipping \${post.title} (already exists)\`)
+        console.log(`Skipping ${post.title} (already exists)`)
       }
     }
     console.log('Migration completed!')
