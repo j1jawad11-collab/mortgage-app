@@ -1,11 +1,11 @@
 import bcrypt from 'bcryptjs'
-import { connectToDatabase } from '../_lib/mongodb.js'
+import dbConnect from '../_lib/dbConnect.js'
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
   try {
-    const client = await connectToDatabase()
-    const db = client.db('mortgageDB')
+    const mongoose = await dbConnect()
+    const db = mongoose.connection.getClient().db('mortgageDB')
     const users = db.collection('users')
     const count = await users.countDocuments()
     if (count > 0) return res.status(403).json({ error: 'Admin already exists. Use login.' })

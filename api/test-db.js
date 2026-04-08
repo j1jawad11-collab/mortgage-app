@@ -1,25 +1,12 @@
-import { MongoClient } from 'mongodb'
-
-const uri = process.env.MONGODB_URI
-let cachedClient = null
-
-async function connectToDatabase() {
-  if (cachedClient) return cachedClient
-  if (!uri) throw new Error('MONGODB_URI is not defined in environment variables.')
-
-  const client = new MongoClient(uri)
-  await client.connect()
-  cachedClient = client
-  return client
-}
+import dbConnect from './_lib/dbConnect.js'
 
 export default async function handler(req, res) {
   try {
-    const client = await connectToDatabase()
-    const db = client.db('mortgageDB')
+    const mongoose = await dbConnect()
+    const db = mongoose.connection.getClient().db('mortgageDB')
 
     const result = await db.collection('connection_tests').insertOne({
-      message: 'MongoDB connected successfully',
+      message: 'MongoDB connected successfully via Mongoose',
       date: new Date(),
     })
 

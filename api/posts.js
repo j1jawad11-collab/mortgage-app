@@ -1,10 +1,10 @@
 import { ObjectId } from 'mongodb'
-import { connectToDatabase } from './_lib/mongodb.js'
+import dbConnect from './_lib/dbConnect.js'
 import { verifyAdminToken } from './_lib/auth.js'
 
 export default async function handler(req, res) {
-  const client = await connectToDatabase()
-  const db = client.db('mortgageDB')
+  const mongoose = await dbConnect()
+  const db = mongoose.connection.getClient().db('mortgageDB')
   const posts = db.collection('posts')
 
   if (req.method === 'GET') {

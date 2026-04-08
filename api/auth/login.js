@@ -1,14 +1,14 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { connectToDatabase } from '../_lib/mongodb.js'
+import dbConnect from '../_lib/dbConnect.js'
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
   try {
     const { email, password } = req.body
     if (!email || !password) return res.status(400).json({ error: 'Email and password required' })
-    const client = await connectToDatabase()
-    const db = client.db('mortgageDB')
+    const mongoose = await dbConnect()
+    const db = mongoose.connection.getClient().db('mortgageDB')
     const user = await db.collection('users').findOne({ email })
     if (!user) return res.status(401).json({ error: 'Invalid credentials' })
     const valid = await bcrypt.compare(password, user.password)
