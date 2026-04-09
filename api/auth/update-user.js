@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 import { verifyAdminToken } from '../_lib/auth.js'
 import dbConnect from '../_lib/dbConnect.js'
-import { ObjectId } from 'mongodb'
+import mongoose from 'mongoose'
 
 export default async function handler(req, res) {
   if (req.method !== 'PUT') return res.status(405).json({ error: 'Method not allowed' })
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Nothing to update' })
     }
 
-    await users.updateOne({ _id: new ObjectId(decoded.id) }, { $set: updateData })
+    await users.updateOne({ _id: new mongoose.Types.ObjectId(decoded.id) }, { $set: updateData })
 
     return res.status(200).json({ success: true, message: 'Settings updated successfully' })
   } catch (error) {

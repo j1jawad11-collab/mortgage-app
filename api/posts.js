@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongodb'
+import mongoose from 'mongoose'
 import dbConnect from './_lib/dbConnect.js'
 import { verifyAdminToken } from './_lib/auth.js'
 
@@ -31,14 +31,14 @@ export default async function handler(req, res) {
     if (!id) return res.status(400).json({ error: 'Post ID required' })
     const slug = title ? title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : undefined
     const update = { updatedAt: new Date(), ...(title && { title, slug }), ...(content && { content }), ...(excerpt !== undefined && { excerpt }), ...(category && { category }), ...(imageUrl !== undefined && { imageUrl }) }
-    await posts.updateOne({ _id: new ObjectId(id) }, { $set: update })
+    await posts.updateOne({ _id: new mongoose.Types.ObjectId(id) }, { $set: update })
     return res.status(200).json({ success: true })
   }
 
   if (req.method === 'DELETE') {
     const { id } = req.body
     if (!id) return res.status(400).json({ error: 'Post ID required' })
-    await posts.deleteOne({ _id: new ObjectId(id) })
+    await posts.deleteOne({ _id: new mongoose.Types.ObjectId(id) })
     return res.status(200).json({ success: true })
   }
 
