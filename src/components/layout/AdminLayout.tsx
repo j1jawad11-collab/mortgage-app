@@ -71,7 +71,7 @@ export function AdminLayout() {
           </div>
         </header>
 
-        <div className="relative z-0 flex-1 p-8">
+        <div className="relative z-0 flex-1 p-8 md:p-12 w-full max-w-7xl mx-auto">
           <Outlet />
         </div>
       </main>

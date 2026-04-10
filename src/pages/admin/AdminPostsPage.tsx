@@ -102,8 +102,8 @@ export function AdminPostsPage() {
                </div>
                <h3 className="text-lg font-medium text-white mb-1">No posts yet</h3>
                <p className="text-slate-400 text-sm">Get started by creating your first blog post.</p>
-               <button onClick={openCreate} className="mt-6 px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-lg text-sm font-medium transition-colors border border-white/10">
-                 Create Post
+               <button onClick={openCreate} className="mt-6 btn-primary">
+                 <Plus className="w-4 h-4 mr-1" /> Create Post
                </button>
             </div>
           ) : (

@@ -17,7 +17,7 @@ const variants: Record<Variant, string> = {
   secondary: 'btn-secondary',
   ghost: 'btn-ghost',
   danger:
-    'inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-red-500 text-white font-semibold text-[0.9375rem] rounded-[0.875rem] border border-transparent cursor-pointer transition-all duration-250 cubic-bezier(0.34, 1.56, 0.64, 1) hover:bg-red-600 hover:-translate-y-[2px] hover:shadow-[0_8px_24px_-4px_rgba(239,68,68,0.5)] active:translate-y-0 active:scale-95',
+    'inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-red-500 text-white font-semibold text-[0.9375rem] rounded-[1rem] border border-transparent cursor-pointer transition-all duration-200 ease-out hover:bg-red-600 hover:-translate-y-[1px] hover:shadow-md active:translate-y-[1px] active:scale-95',
 }
 
 const sizes: Record<Size, string> = {
