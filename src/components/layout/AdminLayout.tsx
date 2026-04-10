@@ -1,10 +1,11 @@
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
-import { LayoutDashboard, FileText, Settings, LogOut } from 'lucide-react'
+import { LayoutDashboard, FileText, Settings, LogOut, PenLine } from 'lucide-react'
 
 const navItems = [
   { label: 'Dashboard', path: '/admin', icon: LayoutDashboard },
   { label: 'Blog Posts', path: '/admin/posts', icon: FileText },
+  { label: 'Content', path: '/admin/content', icon: PenLine },
   { label: 'Settings', path: '/admin/settings', icon: Settings },
 ]
 

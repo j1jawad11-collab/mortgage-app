@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/context/AuthContext'
-import { FileText, Building, Activity, PenLine, ExternalLink } from 'lucide-react'
+import { FileText, Building, Activity, PenLine, ExternalLink, Globe } from 'lucide-react'
 
 interface Stats {
   posts: number
@@ -71,6 +71,10 @@ export function AdminDashboard() {
           <a href="/admin/posts" className="group flex items-center gap-2 px-5 py-2.5 bg-teal-500/10 hover:bg-teal-500/20 border border-teal-500/20 text-teal-400 rounded-xl text-sm font-semibold transition-all">
             <PenLine className="w-4 h-4" />
             Manage Posts
+          </a>
+          <a href="/admin/content" className="group flex items-center gap-2 px-5 py-2.5 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 text-indigo-400 rounded-xl text-sm font-semibold transition-all">
+            <Globe className="w-4 h-4" />
+            Edit Content
           </a>
           <a href="/" target="_blank" className="group flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 hover:text-white rounded-xl text-sm font-semibold transition-all">
             <ExternalLink className="w-4 h-4" />

@@ -5,7 +5,7 @@ import { NumberDisplay } from '@/components/ui/NumberDisplay'
 import { AnimatedCounter } from '@/components/ui/AnimatedCounter'
 import { calculateMortgage } from '@/utils/mortgageCalc'
 import { formatCurrency } from '@/utils/formatters'
-import { content } from '@/content/siteContent'
+import { useHomeContent } from '@/hooks/useSiteContent'
 
 // ── Mini hero calculator ──────────────────────────────────────────────────────
 function HeroCalculator() {
@@ -13,7 +13,8 @@ function HeroCalculator() {
   const [rate, setRate] = useState(4.89)
   const [years, setYears] = useState(25)
 
-  const c = content.home.heroCalculator
+  const home = useHomeContent()
+  const c = home.heroCalculator
 
   const result = calculateMortgage({
     homePrice,
@@ -91,7 +92,7 @@ function HeroCalculator() {
 
 // ── Page ─────────────────────────────────────────────────────────────────────
 export function HomePage() {
-  const c = content.home
+  const c = useHomeContent()
 
   return (
     <>
