@@ -1,6 +1,7 @@
-import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
 import { LayoutDashboard, FileText, Settings, LogOut, PenLine } from 'lucide-react'
+import { PageTransition } from './PageTransition'
 
 const navItems = [
   { label: 'Dashboard', path: '/admin', icon: LayoutDashboard },
@@ -71,8 +72,8 @@ export function AdminLayout() {
           </div>
         </header>
 
-        <div className="relative z-0 flex-1 p-8 md:p-12 w-full max-w-7xl mx-auto">
-          <Outlet />
+        <div className="relative z-0 flex-1 p-8 md:p-12 w-full max-w-7xl mx-auto flex flex-col">
+          <PageTransition />
         </div>
       </main>
     </div>

@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
-import { Outlet, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { SiteHeader } from './SiteHeader'
 import { Footer } from './Footer'
+import { PageTransition } from './PageTransition'
 
 export function Layout() {
   const { pathname } = useLocation()
@@ -14,8 +15,8 @@ export function Layout() {
   return (
     <div className="min-h-screen flex flex-col">
       <SiteHeader />
-      <main id="main-content" className="flex-1 pt-16">
-        <Outlet />
+      <main id="main-content" className="flex-1 flex flex-col pt-16">
+        <PageTransition />
       </main>
       <Footer />
     </div>

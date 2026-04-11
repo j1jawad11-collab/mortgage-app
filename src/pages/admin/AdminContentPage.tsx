@@ -6,6 +6,7 @@ import {
   Loader2, CheckCircle2, AlertCircle, ChevronDown,
   Globe, Briefcase
 } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 // ── Types ──────────────────────────────────────────────────────────────────────
 type Tab = 'home' | 'services'
@@ -97,10 +98,14 @@ function Section({ title, badge, defaultOpen = true, children }: {
 // Toast banner
 function Toast({ text, type }: { text: string; type: string }) {
   return (
-    <div
-      className={`animate-in fade-in slide-in-from-top-2 px-4 py-3 rounded-xl text-sm border flex items-center gap-3 ${
+    <motion.div
+      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -10, scale: 0.95 }}
+      transition={{ duration: 0.2 }}
+      className={`px-4 py-3 rounded-xl text-sm border flex items-center gap-3 ${
         type === 'success'
-          ? 'bg-teal-500/10 border-teal-500/30 text-teal-400'
+          ? 'bg-teal-500/10 border-teal-500/30 text-teal-400 shadow-[0_0_20px_rgba(45,212,191,0.15)]'
           : 'bg-red-500/10 border-red-500/30 text-red-400'
       }`}
     >
@@ -108,20 +113,18 @@ function Toast({ text, type }: { text: string; type: string }) {
         ? <CheckCircle2 className="w-4 h-4 shrink-0" />
         : <AlertCircle className="w-4 h-4 shrink-0" />}
       {text}
-    </div>
+    </motion.div>
   )
 }
 
-// Skeleton loader
-function Skeleton() {
+import { Skeleton } from '@/components/ui/Skeleton'
+
+// Skeleton loader layout
+function ContentSkeleton() {
   return (
     <div className="space-y-4">
       {[...Array(4)].map((_, i) => (
-        <div
-          key={i}
-          className="h-14 bg-white/5 rounded-xl animate-pulse"
-          style={{ animationDelay: `${i * 100}ms` }}
-        />
+        <Skeleton key={i} className="h-14" delay={i * 0.15} />
       ))}
     </div>
   )
@@ -138,7 +141,9 @@ function SaveBar({
   return (
     <div className="sticky bottom-0 z-10 bg-[#0a1325]/90 backdrop-blur-xl border-t border-white/5 px-0 py-4 flex items-center justify-between gap-4 mt-2">
       <div className="flex-1">
-        {msg.text && <Toast text={msg.text} type={msg.type} />}
+        <AnimatePresence mode="popLayout">
+          {msg.text && <Toast key={msg.text} text={msg.text} type={msg.type} />}
+        </AnimatePresence>
       </div>
       <button
         type="button"
@@ -314,7 +319,7 @@ export function AdminContentPage() {
         <div className="space-y-4">
           {homeLoading ? (
             <div className="bg-[#0b1528]/50 border border-white/5 rounded-2xl p-6">
-              <Skeleton />
+              <ContentSkeleton />
             </div>
           ) : (
             <>
@@ -472,7 +477,7 @@ export function AdminContentPage() {
         <div className="space-y-4">
           {servicesLoading ? (
             <div className="bg-[#0b1528]/50 border border-white/5 rounded-2xl p-6">
-              <Skeleton />
+              <ContentSkeleton />
             </div>
           ) : (
             <>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/context/AuthContext'
 import { Plus, Pencil, Trash2, X, Loader2, Image as ImageIcon, FileText } from 'lucide-react'
+import { Skeleton } from '@/components/ui/Skeleton'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface Post {
   _id: string
@@ -80,17 +82,24 @@ export function AdminPostsPage() {
         </button>
       </div>
 
-      {msg && (
-        <div className="animate-in fade-in slide-in-from-top-2 px-4 py-3 bg-teal-500/10 border border-teal-500/20 text-teal-400 rounded-xl text-sm flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-teal-400" />
-          {msg}
-        </div>
-      )}
+      <AnimatePresence>
+        {msg && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="px-4 py-3 bg-teal-500/10 border border-teal-500/30 text-teal-400 rounded-xl text-sm flex items-center gap-2 shadow-[0_0_20px_rgba(45,212,191,0.15)]"
+          >
+            <div className="w-1.5 h-1.5 rounded-full bg-teal-400" />
+            {msg}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {loading ? (
         <div className="bg-[#0b1528]/50 backdrop-blur-md border border-white/5 rounded-2xl overflow-hidden p-6 space-y-4">
           {[...Array(4)].map((_, i) => (
-             <div key={i} className="h-16 bg-white/5 rounded-xl animate-pulse" style={{ animationDelay: `${i * 150}ms` }} />
+             <Skeleton key={i} className="h-16" delay={i * 0.15} />
           ))}
         </div>
       ) : (
