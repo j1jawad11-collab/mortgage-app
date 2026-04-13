@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="roofGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d9488;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#14b8a6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f1e3d;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a2f57;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded square -->
+  <rect width="512" height="512" rx="96" ry="96" fill="url(#bgGrad)" />
+
+  <!-- House body (white) -->
+  <rect x="156" y="272" width="200" height="160" rx="8" fill="white" opacity="0.95"/>
+
+  <!-- Roof (teal gradient triangle) -->
+  <polygon points="256,100 100,272 412,272" fill="url(#roofGrad)" />
+
+  <!-- Door cutout (navy) -->
+  <rect x="218" y="352" width="76" height="80" rx="6" fill="#0f1e3d" opacity="0.85"/>
+
+  <!-- "D" letterform on the door in teal -->
+  <text x="256" y="418"
+        font-family="Georgia, serif"
+        font-size="64"
+        font-weight="bold"
+        text-anchor="middle"
+        fill="url(#roofGrad)">D</text>
+</svg>
