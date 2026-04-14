@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
-import { FileText, Activity, PenLine, ExternalLink, Globe, Clock, Plus, LayoutTemplate, ArrowRight } from 'lucide-react'
+import { FileText, Activity, ExternalLink, Clock, Plus, LayoutTemplate, ArrowRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { Skeleton } from '@/components/ui/Skeleton'
 
@@ -49,7 +49,7 @@ export function AdminDashboard() {
 
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+    show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 300, damping: 24 } }
   }
 
   return (
